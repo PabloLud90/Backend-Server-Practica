@@ -17,6 +17,15 @@ app.use(bodyParser.json())
 var appRoutes= require('./routes/app');
 var usuarioRoutes= require('./routes/usuario');
 var loginRoutes= require('./routes/login');
+var medicoRoutes= require('./routes/medico');
+var hospitalRoutes= require('./routes/hospital');
+var uploadRoutes= require('./routes/upload');
+var imagenesRoutes= require('./routes/imagenes');
+
+//ruta busqueda
+var busquedaRoutes= require('./routes/busqueda');
+
+
 
 
 //conexion BD
@@ -27,9 +36,23 @@ mongoose.connection.openUri('mongodb://localhost:27017/hospitalDB', (err, res)=>
 
 })
 
+//server index  config
+// Ultilizado para cargar las imagenes en el navegador pero no es buena practica para
+//la privacidad: npm i server-index
+// var serveIndex = require('serve-index');
+// app.use(express.static(__dirname + '/'))
+// app.use('/uploads', serveIndex(__dirname + '/uploads'));
+
+
 //rutas
+app.use('/hospital', hospitalRoutes);
+app.use('/medico', medicoRoutes);
 app.use('/usuario', usuarioRoutes);
 app.use('/login', loginRoutes);
+app.use('/busqueda', busquedaRoutes);
+app.use('/upload', uploadRoutes);
+app.use('/img', imagenesRoutes);
+
 app.use('/', appRoutes);
 
 
