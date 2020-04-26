@@ -67,12 +67,6 @@ app.put('/:tipo/:id', (req, res, next )=> {
         }
 
         subir(tipo, id, nombreArchivo, res);
-
-        // res.status(200).json({
-        //     ok: true, 
-        //     mensaje: 'ArchivoMovido',
-        //     extensionArchivo: extensionArchivo
-        // });
     });
 });
 
@@ -81,13 +75,11 @@ function subir(tipo, id, nombreArchivo, res){
         Usuario.findById(id, (err, usuario)=>{
 
             if(!usuario){
-
                 return res.status(400).json({
                     ok: true, 
                     mensaje: 'Usuario no existe',
                     errors: {message: 'Usuario no existe'}
                 });
-
             }
 
             var pathAnterior= './uploads/usuarios/' + usuario.img;
