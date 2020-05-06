@@ -26,7 +26,7 @@ app.put('/:tipo/:id', (req, res, next )=> {
         })
 
     }
-
+    //pregunta si vienen archivos
     if(!req.files){
         return res.status(400).json({
             ok: false,

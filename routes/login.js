@@ -61,7 +61,7 @@ app.post('/google', async (req, res)=>{
         }
 
         if(usuarioDB){
-            if(usuarioDB.google === false){
+            if(!usuarioDB.google === false){
                 return res.status(400).json({
                     ok: false, 
                     mensaje: 'Debe de usar su autenticacion normal'
@@ -95,18 +95,11 @@ app.post('/google', async (req, res)=>{
                         ok: true,
                         Usuario: usuarioDB,
                         token:token,
-                        id: usuarioDB._id
+                        id: usuarioDB.id
                     });
                 });
         }
     });
-
-        // return res.status(200).json({
-        //     ok: true,
-        //     mensaje: 'Ok',
-        //     googleUser: googleUser
-
-        // });
 });
 
 //=====================================================
@@ -133,7 +126,8 @@ app.post('/', (req, res)=>{
                 errors: err
             });
         }
-        if(bcrypt.compareSync(body.password, usuarioDB.password)){
+        //comparar contrasena encriptada
+        if(bcrypt.compareSync(JSON.stringify(body.password), usuarioDB.password)){ // ====> problema con bcrypt
             return res.status(400).json({
                 ok: false, 
                 mensaje: 'credenciales incorrectas - password',

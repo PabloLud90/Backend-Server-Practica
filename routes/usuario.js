@@ -45,8 +45,6 @@ app.get('/', (req, res, next )=> {
 })
 
 
-
-
 //=====================================================
 // Put(Actualizar) usuarios
 //=====================================================
@@ -94,12 +92,14 @@ app.put('/:id', mdAutenticacion.verificaToken,(req, res)=>{
 //=====================================================
 // Crear usuarios
 //=====================================================
-app.post('/', mdAutenticacion.verificaToken, (req,res)=>{
+app.post('/', (req,res)=>{
     var body= req.body;
+
     var usuario= new Usuario({
         nombre: body.nombre,
         email: body.email,
-        password: bcrypt.hashSync(body.password, 10),
+        password: bcrypt.hashSync(JSON.stringify(body.password), 10),
+        //password: body.password,
         img: body.img,
         role: body.role
     });
@@ -139,7 +139,7 @@ app.delete('/:id',mdAutenticacion.verificaToken,(req,res)=>{
                 errors: err
             });
         }
-        if(err){
+        if(!usuarioBorrado){
             return res.status(400).json({
                 ok: false, 
                 mensaje: 'No existe usuario con ese ID',
